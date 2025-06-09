@@ -27,7 +27,10 @@ SECRET_KEY = 'django-insecure-your-secret-key-here'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.218.234']
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.218.234', '0.0.0.0']
+ALLOWED_HOSTS = ['*']
+
+
 
 
 # Application definition
@@ -45,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'djoser',
     'social_django',
+    'rest_framework_simplejwt.token_blacklist',
     
     # Local apps
     'api',
@@ -85,12 +89,30 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+#SQLite Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+#PostgreSQL Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'onescreen',
+        'USER': 'onescreen_owner',
+        'PASSWORD': 'npg_xcNX9odz4Ztu',
+        'HOST': 'ep-restless-bread-a1tbmung-pooler.ap-southeast-1.aws.neon.tech',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
+
 
 
 # Password validation
@@ -147,8 +169,8 @@ REST_FRAMEWORK = {
 
 # JWT settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # 1 day lifetime for access token
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # you can adjust refresh token lifetime too
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
@@ -169,6 +191,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Social Auth settings
 AUTHENTICATION_BACKENDS = (
+    'api.authentication.EmailOrUsernameModelBackend',
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )

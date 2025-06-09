@@ -13,11 +13,13 @@ class PlatformSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'icon', 'deep_link_prefix')
 
 class UserPlatformSerializer(serializers.ModelSerializer):
-    platform = PlatformSerializer(read_only=True)
+    platform_details = PlatformSerializer(source='platform', read_only=True)
+    platform = serializers.PrimaryKeyRelatedField(queryset=Platform.objects.all(), write_only=True)
     
     class Meta:
         model = UserPlatform
-        fields = ('id', 'platform', 'is_active')
+        fields = ('id', 'platform', 'platform_details', 'is_active')
+        read_only_fields = ('id',)
 
 class WatchlistItemSerializer(serializers.ModelSerializer):
     platform = PlatformSerializer(read_only=True)

@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
+		"name": "OneScreen API",
+		"description": "API collection for OneScreen application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Get JWT Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"your_username\",\n    \"password\": \"your_password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "token", ""]
+						}
+					}
+				},
+				{
+					"name": "Refresh JWT Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refresh\": \"your_refresh_token\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/refresh/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "token", "refresh", ""]
+						}
+					}
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"username\",\n    \"password\": \"password\",\n    \"email\": \"email@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/users/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "users", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Platforms",
+			"item": [
+				{
+					"name": "List Platforms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/platforms/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "platforms", ""]
+						}
+					}
+				},
+				{
+					"name": "List User Platforms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/user-platforms/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "user-platforms", ""]
+						}
+					}
+				},
+				{
+					"name": "Connect Platform",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"platform\": 1,\n    \"is_active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user-platforms/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "user-platforms", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Watchlist",
+			"item": [
+				{
+					"name": "List Watchlist Items",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/watchlist/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "watchlist", ""]
+						}
+					}
+				},
+				{
+					"name": "Add Watchlist Item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Movie Title\",\n    \"tmdb_id\": \"123\",\n    \"media_type\": \"movie\",\n    \"platform\": 1,\n    \"poster_path\": \"path/to/poster\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/watchlist/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "watchlist", ""]
+						}
+					}
+				},
+				{
+					"name": "Add Watchlist Item with Validation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"platform_id\": 1,\n    \"title\": \"Movie Title\",\n    \"tmdb_id\": \"123\",\n    \"media_type\": \"movie\",\n    \"poster_path\": \"path/to/poster\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/watchlist/add_item/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "watchlist", "add_item", ""]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "your_access_token_here",
+			"type": "string"
+		}
+	]
+} 
